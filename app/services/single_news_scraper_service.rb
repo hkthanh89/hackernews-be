@@ -2,19 +2,19 @@ class SingleNewsScraperService
   include ScraperHelpers
 
   def self.execute(url: )
-    source = URI.open(url).read
+    source = URI.open(URI.encode(url)).read
 
     document = parsed_document(url)
 
     image = document.at('meta[property="og:image"]')
-    title = document.at('meta[property="og:title"]')
-    description = document.at('meta[property="og:description"]')
+    title = document.at('meta[property="og:title"]').attributes['content'].value
+    description = document.at('meta[property="og:description"]').attributes['content'].value
 
     News.new({
       url: url,
       cover_image_url: image.present? ? image.attributes['content'].value : '',
-      title: title.attributes['content'].value,
-      description: description.attributes['content'].value,
+      title: title,
+      description: description,
       content: Readability::Document.new(source).content
     })
   end
