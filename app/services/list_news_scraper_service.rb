@@ -4,10 +4,12 @@ require 'resolv-replace'
 class ListNewsScraperService
   include ScraperHelpers
 
-  def self.execute
+  def self.execute(page: )
+    page = page.to_i > 0 ? page.to_i : 1
+
     data = []
 
-    document = parsed_document('https://news.ycombinator.com/best')
+    document = parsed_document("https://news.ycombinator.com/best?p=#{page}")
 
     item_list = document.css('.itemlist')
 
