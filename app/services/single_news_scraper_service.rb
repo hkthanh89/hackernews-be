@@ -5,7 +5,7 @@ class SingleNewsScraperService
     Rails.cache.fetch(url, expires_in: 5.days) do
       source = URI.open(URI.encode(url)).read
 
-      document = parsed_document(url)
+      document = Nokogiri::HTML(source)
 
       image = document.at('meta[property="og:image"]')
       title = document.at('meta[property="og:title"]').attributes['content'].value
@@ -16,7 +16,7 @@ class SingleNewsScraperService
         cover_image_url: image.present? ? image.attributes['content'].value : '',
         title: title,
         description: description,
-        content: Readability::Document.new(source).content
+        content: Readability::Document.new(source).content.gsub(/\t/, "")
       })
     end
   end
