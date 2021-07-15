@@ -32,11 +32,20 @@ class ListNewsScraperService
       threads = []
       data.each do |news|
         threads << Thread.new do
-          document = parsed_document(news.url)
-          og_image = document.at('meta[property="og:image"]')
+          begin
+            news_url = news.url
 
-          image_url = og_image.present? ? og_image.attributes['content'].value : ''
-          cover_image_urls[news.url] = image_url
+            # skip if url is local
+            next if /item\?id\=[0-9]+/.match?(news_url)
+
+            document = parsed_document(news_url)
+            og_image = document.at('meta[property="og:image"]')
+
+            image_url = og_image.present? ? og_image.attributes['content'].value : ''
+            cover_image_urls[news_url] = image_url
+          rescue StandardError
+            cover_image_urls[news_url] = nil
+          end
         end
       end
       threads.map(&:join)
