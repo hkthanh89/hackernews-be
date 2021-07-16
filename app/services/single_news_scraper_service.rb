@@ -2,7 +2,7 @@ class SingleNewsScraperService
   include ScraperHelpers
 
   def self.execute(url: )
-    Rails.cache.fetch(url, expires_in: 5.days) do
+    Rails.cache.fetch(url, expires_in: 2.days) do
       source = URI.open(URI.encode(url)).read
 
       document = Nokogiri::HTML(source)
