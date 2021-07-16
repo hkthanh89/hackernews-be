@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["url", "cover_image_url", "title", "sub_title", "description", "content"],
+  "properties": {
+    "url": { "type": "string" },
+    "cover_image_url": { "type": ["string", "null"] },
+    "title": { "type": "string" },
+    "sub_title": { "type": ["string", "null"] },
+    "description": { "type": "string" },
+    "content": { "type": ["string", "null"] }
+  }
+}
