@@ -40,6 +40,7 @@ group :test do
   gem 'vcr', '~> 6.0'
   gem 'webmock', '~> 3.12', '>= 3.12.2'
   gem 'json-schema', '~> 2.8', '>= 2.8.1'
+  gem 'simplecov', '~> 0.21.2', require: false
 end
 
 group :production do
