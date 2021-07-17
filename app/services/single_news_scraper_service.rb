@@ -3,7 +3,7 @@ class SingleNewsScraperService
 
   def self.execute(url: )
     Rails.cache.fetch(url, expires_in: 2.days) do
-      source = URI.open(URI.encode(url)).read
+      source = URI.open(URI.encode(url), ::USER_AGENT).read
 
       document = Nokogiri::HTML(source)
 

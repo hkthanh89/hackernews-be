@@ -40,7 +40,7 @@ RSpec.describe ListNewsScraperService, type: :service do
     context 'caching' do
       context 'when cache does not exist' do
         it 'should send request to get data' do
-          expect(URI).to receive(:open).with("#{::SOURCE_URL}?p=1", 'User-Agent' => 'Hackernews').once
+          expect(URI).to receive(:open).with("#{::SOURCE_URL}?p=1", ::USER_AGENT).once
 
           subject
         end

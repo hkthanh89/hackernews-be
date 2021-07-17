@@ -14,7 +14,7 @@ RSpec.describe SingleNewsScraperService, type: :service do
     before(:each) { Rails.cache.clear }
 
     it 'should read url correctly' do
-      expect(URI).to receive(:open).with(URI.encode(url)).and_call_original
+      expect(URI).to receive(:open).with(URI.encode(url), ::USER_AGENT).and_call_original
 
       subject
     end

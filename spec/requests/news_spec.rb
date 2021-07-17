@@ -39,7 +39,7 @@ RSpec.describe 'News', type: :request do
       include_examples 'fetch_list_news'
 
       it 'fetchs data correct page' do
-        expect(URI).to receive(:open).with(URI.encode("#{::SOURCE_URL}?p=1"), 'User-Agent' => 'Hackernews')
+        expect(URI).to receive(:open).with(URI.encode("#{::SOURCE_URL}?p=1"), ::USER_AGENT)
 
         subject
       end
@@ -52,7 +52,7 @@ RSpec.describe 'News', type: :request do
       include_examples 'fetch_list_news'
 
       it 'fetchs data correct page' do
-        expect(URI).to receive(:open).with(URI.encode("#{::SOURCE_URL}?p=2"), 'User-Agent' => 'Hackernews')
+        expect(URI).to receive(:open).with(URI.encode("#{::SOURCE_URL}?p=2"), ::USER_AGENT)
 
         subject
       end

@@ -6,7 +6,7 @@ module ScraperHelpers
 
   class_methods do
     def parsed_document(url)
-      html = URI.open(URI.encode(url), 'User-Agent' => 'Hackernews')
+      html = URI.open(URI.encode(url), ::USER_AGENT)
       Nokogiri::HTML(html)
     end
 
