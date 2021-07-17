@@ -19,3 +19,10 @@ jobs:
 
       - name: Run tests
         run: RUBYOPT='-W0' bundle exec rspec spec
+
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
