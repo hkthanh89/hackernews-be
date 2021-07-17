@@ -37,3 +37,13 @@ http://localhost:3000/news?page=2
 http://localhost:3000/news?url=<url>
 ```
 
+### Use Docker
+```
+$ docker build -t hackernews-be .
+
+# run test
+$ docker run -e RUBYOPT=-W0 -it --rm hackernews-be bundle exec rspec
+
+# start server
+$ docker run -it --rm -p 3000:3000 hackernews-be bundle exec rails s -b 0.0.0.0
+```
