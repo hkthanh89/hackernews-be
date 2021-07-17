@@ -1,0 +1,1 @@
+SOURCE_URL = 'https://news.ycombinator.com/best'.freeze

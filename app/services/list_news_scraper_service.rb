@@ -3,7 +3,7 @@ class ListNewsScraperService
 
   def self.execute(page: )
     page = page.to_i > 0 ? page.to_i : 1
-    url = "https://news.ycombinator.com/best?p=#{page}"
+    url = "#{::SOURCE_URL}?p=#{page}"
 
     Rails.cache.fetch(url, expires_in: 30.minutes) do
       data = []
