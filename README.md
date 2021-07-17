@@ -1,24 +1,39 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![main](https://github.com/hkthanh89/hackernews-be/actions/workflows/test.yml/badge.svg)
 
-Things you may want to cover:
+### RUBY VERSION
+Ruby: 2.7.0
 
-* Ruby version
+### Install dependencies
+```
+$ bundle install
+```
 
-* System dependencies
+### Start server
+```
+$ rails s -p 3000
+```
 
-* Configuration
+### Running Test
+```
+$ bundle exec rspec spec -f d
+```
 
-* Database creation
+### API Endpoint
 
-* Database initialization
+##### Get All News
+```
+http://localhost:3000/news
+```
 
-* How to run the test suite
+##### Get All News by page
+```
+http://localhost:3000/news?page=2
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+##### Get a News detail
+```
+http://localhost:3000/news?url=<url>
+```
 
-* Deployment instructions
-
-* ...
