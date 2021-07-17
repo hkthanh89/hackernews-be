@@ -1,5 +1,6 @@
 class News
-  attr_accessor :url, :cover_image_url, :title, :sub_title, :description, :content
+  attr_reader :url
+  attr_writer :cover_image_url
 
   def initialize(attributes = {})
     @url = attributes[:url]

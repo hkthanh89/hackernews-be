@@ -12,20 +12,20 @@ class ListNewsScraperService
 
       item_list = document.css('.itemlist')
 
-      titles = item_list.css('.storylink')
-      titles.each do |title|
-        news = News.new({ title: title.text, url: title.attributes['href'].value })
+      title_elements = item_list.css('tr.athing td.title+td+td')
+      description_elements = item_list.css('.subtext')
+
+      title_elements.each_with_index do |title_elm, index|
+        title = title_elm.css('.storylink')
+
+        news = News.new({
+          url: title.attribute('href').value,
+          title: title.text,
+          sub_title: title_elm.css('.sitestr').text,
+          description: description_elements[index].text.gsub(/\n/, '').strip
+        })
+
         data << news
-      end
-
-      sub_titles = item_list.css('.sitestr')
-      sub_titles.each_with_index do |sub_title, index|
-        data[index].sub_title = sub_title.text
-      end
-
-      descriptions = item_list.css('.subtext')
-      descriptions.each_with_index do |desc, index|
-        data[index].description = desc.text.gsub(/\n/, "").strip
       end
 
       cover_image_urls = {}
