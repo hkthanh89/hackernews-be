@@ -9,5 +9,9 @@ module ScraperHelpers
       html = URI.open(URI.encode(url), 'User-Agent' => 'Hackernews')
       Nokogiri::HTML(html)
     end
+
+    def element_content(element)
+      element.attributes['content'].value
+    end
   end
 end
