@@ -13,6 +13,8 @@ RSpec.describe 'News', type: :request do
   describe 'GET List News' do
     let(:cassette) { 'list_news' }
 
+    before(:each) { Rails.cache.clear }
+
     shared_examples 'fetch_list_news' do
       it 'returns http success' do
         subject

@@ -9,6 +9,8 @@ RSpec.describe ListNewsScraperService, type: :service do
       end
     end
 
+    before(:each) { Rails.cache.clear }
+
     it 'should create correct data' do
       data = subject
 
@@ -33,6 +35,26 @@ RSpec.describe ListNewsScraperService, type: :service do
         description: '2460 points by homarp 1 day ago  | 1546 comments',
         content: nil
       }.as_json)
+    end
+
+    context 'caching' do
+      context 'when cache does not exist' do
+        it 'should send request to get data' do
+          expect(URI).to receive(:open).with('https://news.ycombinator.com/best?p=1', 'User-Agent' => 'Hackernews').once
+
+          subject
+        end
+      end
+
+      context 'when cache exists' do
+        it 'should get data from cache' do
+          subject
+
+          expect(URI).not_to receive(:open)
+
+          described_class.execute(page: nil)
+        end
+      end
     end
   end
 end

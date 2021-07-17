@@ -11,6 +11,8 @@ RSpec.describe SingleNewsScraperService, type: :service do
       end
     end
 
+    before(:each) { Rails.cache.clear }
+
     it 'should read url correctly' do
       expect(URI).to receive(:open).with(URI.encode(url)).and_call_original
 
@@ -22,6 +24,26 @@ RSpec.describe SingleNewsScraperService, type: :service do
 
       expect(news).to be_an_instance_of(News)
       expect(news.as_json).to eq(JSON.parse(File.new(Rails.root.join('spec', 'fixtures', 'news', 'single_news.json')).read))
+    end
+
+    context 'caching' do
+      context 'when cache does not exist' do
+        it 'should send request to get data' do
+          expect(URI).to receive(:open).once.and_call_original
+
+          subject
+        end
+      end
+
+      context 'when cache exists' do
+        it 'should get data from cache' do
+          subject
+
+          expect(URI).not_to receive(:open)
+
+          described_class.execute(url: url)
+        end
+      end
     end
 
     context 'when og metadata is missing' do
