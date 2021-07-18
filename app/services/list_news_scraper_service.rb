@@ -5,7 +5,7 @@ class ListNewsScraperService
     page = page.to_i > 0 ? page.to_i : 1
     url = "#{::SOURCE_URL}?p=#{page}"
 
-    Rails.cache.fetch(url, expires_in: 30.minutes) do
+    Rails.cache.fetch(url, expires_in: 15.minutes) do
       data = []
 
       document = parsed_document(url)
