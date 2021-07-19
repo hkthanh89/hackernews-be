@@ -1,6 +1,6 @@
 class News
   attr_reader :url
-  attr_writer :cover_image_url
+  attr_writer :cover_image_url, :description
 
   def initialize(attributes = {})
     @url = attributes[:url]

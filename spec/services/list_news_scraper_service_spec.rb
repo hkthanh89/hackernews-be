@@ -33,7 +33,7 @@ RSpec.describe ListNewsScraperService, type: :service do
         cover_image_url: 'https://cdn.cloudflare.steamstatic.com/steamdeck/images/steamdeck_social.jpg',
         title: 'Valve Steam Deck',
         sub_title: 'steamdeck.com',
-        description: '2491 points by homarp 2 days ago  | 1581 comments',
+        description: 'Steam Deck is a powerful handheld gaming PC that delivers the Steam games and features you love.',
         content: nil
       }.as_json)
     end
@@ -51,7 +51,7 @@ RSpec.describe ListNewsScraperService, type: :service do
           cover_image_url: 'https://media.ana.press/old/1399/09/24/637435500045793867_lg.JPG',
           title: 'Mr. Rafieh’s Tehran Pencil Shop',
           sub_title: 'ana.press',
-          description: '231 points by NaOH 3 days ago  | 76 comments',
+          description: 'در راهرو های باریک بازار لوازم التحریر که گذر می کنیم یک نام برای همه بسیار آشناست و آدرس دکه اش برای در ذهن کسبه حک شده. اگر دنبال مداد رنگی باشی همه آقا رف...',
           content: nil
         }.as_json)
       end

@@ -5,7 +5,7 @@ class ListNewsScraperService
     page = page.to_i > 0 ? page.to_i : 1
     url = "#{::SOURCE_URL}?p=#{page}"
 
-    Rails.cache.fetch(url, expires_in: 15.minutes) do
+    Rails.cache.fetch(url, expires_in: 100.minutes) do
       data = []
 
       document = parsed_document(url)
@@ -13,8 +13,6 @@ class ListNewsScraperService
       item_list = document.css('.itemlist')
 
       title_elements = item_list.css('tr.athing td.title+td+td')
-      description_elements = item_list.css('.subtext')
-
       title_elements.each_with_index do |title_elm, index|
         title = title_elm.css('.storylink')
 
@@ -22,33 +20,44 @@ class ListNewsScraperService
           url: title.attribute('href').value,
           title: title.text,
           sub_title: title_elm.css('.sitestr').text,
-          description: description_elements[index].text.gsub(/\n/, '').strip
         })
 
         data << news
       end
 
-      cover_image_urls = {}
+      news_details = {}
       threads = []
       data.each do |news|
         threads << Thread.new do
           begin
             news_url = news.url
 
-            document = parsed_document(news_url)
-            og_image = document.at('meta[property="og:image"]')
+            news_details[news_url] = {}
 
+            document = parsed_document(news_url)
+
+            description = ''
+            og_description = document.at('meta[property="og:description"]') || document.at('meta[property="description"]')
+            description = if og_description.present?
+              element_content(og_description)
+            else
+              document.at('p').text
+            end
+            news_details[news_url][:description] = description.gsub(/\n/, '').strip.truncate(160)
+
+            og_image = document.at('meta[property="og:image"]')
             image_url = og_image.attributes['content'].value
-            cover_image_urls[news_url] = image_url
+            news_details[news_url][:cover_image_url] = image_url
           rescue StandardError
-            cover_image_urls[news_url] = ''
+            news_details[news_url][:cover_image_url] = ''
           end
         end
       end
       threads.map(&:join)
 
       data.each do |news|
-        news.cover_image_url = cover_image_urls[news.url]
+        news.description = news_details[news.url][:description]
+        news.cover_image_url = news_details[news.url][:cover_image_url]
       end
 
       data

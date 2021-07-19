@@ -28,10 +28,10 @@ class SingleNewsScraperService
 
       description = ''
       og_description = document.at('meta[property="og:description"]')
-      if og_description.present?
-        description = element_content(og_description)
+      description = if og_description.present?
+        element_content(og_description)
       else
-        description = document.at('p').text
+        document.at('p').text
       end
 
       News.new({
