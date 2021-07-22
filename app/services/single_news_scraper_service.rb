@@ -7,31 +7,32 @@ class SingleNewsScraperService
 
       document = Nokogiri::HTML(source)
 
-      image_url = ''
-      og_image = document.at('meta[property="og:image"]')
-
-      if og_image.present?
-        image_url = element_content(og_image)
-      else
-        # get 1st img content (special for Hacker News page)
-        link = document.at('a')
-        image_url = "#{link.attributes['href'].value}/#{link.at('img').attributes['src'].value}"
-      end
-
-      title = ''
       og_title = document.at('meta[property="og:title"]')
-      if og_title.present?
-        title = element_content(og_title)
+      title = if og_title.present?
+        element_content(og_title)
       else
-        title = document.at('title').text
+        document.at('title').text
       end
 
-      description = ''
       og_description = document.at('meta[property="og:description"]')
       description = if og_description.present?
         element_content(og_description)
       else
         document.at('p').text
+      end
+
+      og_image = document.at('meta[property="og:image"]')
+      image_url = if og_image.present?
+        element_content(og_image)
+      else
+        # get 1st img content (special for Hacker News page)
+        link = document.at('a')
+
+        if link.attributes['href'] && link.at('img')
+          "#{link.attributes['href'].value}/#{link.at('img').attributes['src'].value}"
+        else
+          ""
+        end
       end
 
       News.new({
