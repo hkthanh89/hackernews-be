@@ -14,7 +14,7 @@ class ListNewsScraperService
 
       title_elements = item_list.css('tr.athing td.title+td+td')
       title_elements.each_with_index do |title_elm, index|
-        title = title_elm.css('.storylink')
+        title = title_elm.css('a')
 
         news = News.new({
           url: title.attribute('href').value,
