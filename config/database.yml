@@ -23,4 +23,4 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  database: hackernews_be
+  database: <%= ENV['DATABASE_URL'] %>
