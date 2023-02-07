@@ -28,7 +28,7 @@ class SingleNewsScraperService
         # get 1st img content (special for Hacker News page)
         link = document.at('a')
 
-        if link.attributes['href'] && link.at('img')
+        if link && link.attributes['href'] && link.at('img')
           "#{link.attributes['href'].value}/#{link.at('img').attributes['src'].value}"
         else
           ""

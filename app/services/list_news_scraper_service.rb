@@ -7,10 +7,9 @@ class ListNewsScraperService
 
     Rails.cache.fetch(url, expires_in: 100.minutes) do
       data = []
-
       document = parsed_document(url)
 
-      item_list = document.css('.itemlist')
+      item_list = document.css('table')
 
       title_elements = item_list.css('tr.athing td.title+td+td')
       title_elements.each_with_index do |title_elm, index|
