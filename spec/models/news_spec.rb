@@ -23,4 +23,13 @@ RSpec.describe News, type: :model do
 
     end
   end
+  
+  describe 'dummy' do
+    it 'should fail' do
+      news = News.new
+      json = news.as_json
+
+      expect(json['url']).to eq(123)
+    end
+  end
 end
